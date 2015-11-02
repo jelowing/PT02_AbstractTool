@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using System.Collections;
 
 namespace PT02_AbstractTool
 {
@@ -13,7 +14,10 @@ namespace PT02_AbstractTool
         {
             string path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
             string pathname = Path.Combine(path, "AbstractTool", nom + ".txt");
-            string extensio = Path.GetExtension(pathname);
+            string pathnameSortida = Path.Combine(path, "AbstractTool", nom +"_info"+".txt");
+            string content = File.ReadAllText(pathname);
+            string fileName = Path.GetFileNameWithoutExtension(pathname);
+
 
             Console.Clear();
             Console.WriteLine("Llegint fitxer ...{0}", pathname);
@@ -21,18 +25,26 @@ namespace PT02_AbstractTool
 
             if (File.Exists(pathname))
             {
-                string content = File.ReadAllText(pathname);
-                DateTime dataCreacio = File.GetCreationTimeUtc(pathname);
-                DateTime dataModificacio = File.GetCreationTimeUtc(pathname);
+                FileInfo info = new FileInfo(pathname);   
+                    using (StreamWriter sw = new StreamWriter(pathnameSortida,false))
+                    {
+                        sw.WriteLine("Nom del fitxer: " + info.Name);
+                        sw.WriteLine("Extensió: " + info.Extension);
+                        sw.WriteLine("Data creació: " + info.CreationTimeUtc);
+                        sw.WriteLine("Data de modificació: " + info.LastWriteTimeUtc);
+                        sw.WriteLine("Número de paraules: "+comptarParaules(pathname, content));
 
-                Console.WriteLine("Nom del fitxer : {0}", Path.GetFileNameWithoutExtension(pathname));
-                Console.WriteLine("Extensió : {0}", extensio);
-                Console.WriteLine("Data creació : {0}", dataCreacio);
-                Console.WriteLine("Data última modificació : {0}", dataModificacio);
-                comptarParaules(pathname, content);
+                    /*Console.WriteLine("Nom del fitxer : {0}", fileName);
+                    Console.WriteLine("Extensió : {0}", extensio);
+                    Console.WriteLine("Data creació : {0}", dataCreacio);
+                    Console.WriteLine("Data última modificació : {0}", dataModificacio);
+                    comptarParaules(pathname, content*/
 
-                /*Console.WriteLine(content);
-                Console.ReadLine();*/
+                    Console.WriteLine("Extracció de contingut satisfactoria!");
+                    Console.WriteLine("El contingut del fitxer s'ha desat a {0} ",pathnameSortida);
+
+                    }
+                
             }
             else
             {
@@ -42,7 +54,7 @@ namespace PT02_AbstractTool
         }
 
 
-        public static void comptarParaules(string pathFile, string content)
+        public static int comptarParaules(string pathFile, string content)
         {
             int paraula = 0;
 
@@ -52,9 +64,10 @@ namespace PT02_AbstractTool
             {
                 paraula++;
             }
-            Console.WriteLine("Numero de paraules : {0}", paraula);
-            Console.ReadLine();
+           
+            return paraula;
         }
+
 
 
     }

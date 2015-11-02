@@ -25,21 +25,30 @@ namespace PT02_AbstractTool
                     Console.WriteLine("Carrega els arxius en aquesta ruta {0}", dir);
                     Console.ReadKey();
                 }
+                try {
+                    Console.WriteLine("Nom del arxiu: ");
+                    string file = Console.ReadLine();
+                    Fitxer.llegir(file);
 
-                Console.WriteLine("Nom del arxiu: ");
-                string file = Console.ReadLine();
-                Fitxer.llegir(file);
-                Console.WriteLine("Vols introduir un altre fitxer? y|n");
-                string input = Console.ReadLine();
-                if (input == "y")
-                {
-                    final = true;
                 }
-                else if (input == "n")
+                catch (Exception e)
                 {
-                    final = false;
+                    Console.WriteLine("El camp nom del arxiu esta buit o no existeix el fitxer");
                 }
+       
+                    Console.WriteLine("Vols introduir un altre fitxer? y|n");
+                    string input = Console.ReadLine();
 
+                    if (input == "y")
+                    {
+                        final = true;
+                    }
+                    else if (input == "n")
+                    {
+                        final = false;
+                        Console.WriteLine("Prem una tecla per sortir ...");
+                    }
+                    
             } while (final);
 
             Console.ReadKey();
