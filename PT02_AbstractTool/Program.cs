@@ -26,6 +26,13 @@ namespace PT02_AbstractTool
                     Console.ReadKey();
                 }
                 try {
+
+                    string[] fileEntries = Directory.GetFiles(dir);
+                    foreach (string f in fileEntries)
+                    {
+                        Console.WriteLine(Path.GetFileName(f));
+                    }
+
                     Console.WriteLine("Nom del arxiu: ");
                     string file = Console.ReadLine();
                     Fitxer.llegir(file);
