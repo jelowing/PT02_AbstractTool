@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Collections;
 
-namespace PT02_AbstractTool
+namespace López_Puente_M06UF1PT
 {
     class Fitxer
     {
@@ -67,36 +67,46 @@ namespace PT02_AbstractTool
 
         public static string ocurrenciesText(string pathFile, string content)
         {
+
+            string path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            string pathDicWords = Path.Combine(path, "AbstractTool", "Dictionary.txt");
+
+            var res = File.ReadLines(pathDicWords).Select((v, i) => new { Index = i, Value = v }).GroupBy(p => p.Index / 2).ToDictionary(g => g.First().Value, g => g.Last().Value);
+
+            //Dictionary<string, string> txtToString = res;
+            
+
             File.ReadAllText(pathFile);
             string[] lineas = content.Split();
             Dictionary<string, int> dic = new Dictionary<string, int>();
-
-
-            int currentCount = 0;
+           
+            
             //IEnumerable LINQ 
-            var items = from pair in dic orderby pair.Value descending select pair;
-            var top5 = items.Take(5);
+            var items = from pair in dic orderby pair.Value descending  select pair;
 
+            int comptador = 0;
             foreach (string s in lineas)
             {
-                dic.TryGetValue(s, out currentCount);
-                dic[s] = currentCount + 1;
+                dic.TryGetValue(s, out comptador);
+                dic[s] = comptador + 1;
                 
             }
 
             //Metode per transformar Enumerable to String
-            var keys = String.Join(", ", top5.Select(x => String.Format("{0}-{1}", x.Key,x.Value)).ToArray());
+            var keys = items.Select(x => String.Format("{0}", x.Key)).ToArray().Except(res.Keys);
+            var top5 = keys.Take(5);
+            var result = String.Join(", ", top5);
 
-            
+
+
             /*foreach (KeyValuePair<string, int> kvp in top5)
             {
                 Console.WriteLine("{0} - {1}", kvp.Key, kvp.Value);             
             }*/
 
-            return keys;
+            return result;
 
         }
-
 
 
     }
