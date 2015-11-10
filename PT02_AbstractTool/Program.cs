@@ -28,7 +28,7 @@ namespace López_Puente_M06UF1PT
                 }
                 else
                 {
-                    Console.WriteLine("Arxius a : {0}", dir);
+                    Console.WriteLine("Arxius a : {0}", dir+"\n");
                 }
                 try {
 
@@ -46,22 +46,34 @@ namespace López_Puente_M06UF1PT
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine("El camp nom del arxiu esta buit o no existeix el fitxer");
+                    Console.WriteLine("No existeix el fitxer o hi ha problemas amb el xml");
                 }
-       
-                    Console.WriteLine("Vols introduir un altre fitxer? y|n");
-                    string input = Console.ReadLine();
 
-                    if (input == "y")
+                    
+                    Console.WriteLine("\n"+"Vols introduir un altre fitxer? y|n");
+                    Boolean ok = false;
+
+                do {
+                    string input = Console.ReadLine();
+                    if (input == "y" || input == "Y")
                     {
                         final = true;
+                        Console.Clear();
+                        ok = true;
                     }
-                    else if (input == "n")
+                    else if (input == "n" || input == "N")
                     {
                         final = false;
                         Console.WriteLine("Prem una tecla per sortir ...");
+                        ok = true;
+                    } else
+                    {
+                        Console.WriteLine("El caràcter introduït no es vàlid, introdueix y o n");
+                        ok = false;
                     }
-                    
+                } while (!ok);
+
+
             } while (final);
 
             Console.ReadKey();
