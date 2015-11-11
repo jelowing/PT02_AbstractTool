@@ -15,7 +15,8 @@ namespace López_Puente_M06UF1PT
             string path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
             string dir = Path.Combine(path, "AbstractTool");
             bool final = true;
-            
+            int a = 0;
+
 
             do
             {
@@ -30,25 +31,25 @@ namespace López_Puente_M06UF1PT
                 {
                     Console.WriteLine("Arxius a : {0}", dir+"\n");
                 }
-                try {
+                
 
-                    string[] fileEntries = Directory.GetFiles(dir);
+                    string[] fileEntries = Directory.GetFiles(dir,"*.txt");
+                    
                     foreach (string f in fileEntries)
                     {
-                        Console.WriteLine(Path.GetFileName(f));
-                        
+                         Console.WriteLine(a + " - " + Path.GetFileName(f));
+                         a++;  
                     }
+
+                    Console.ResetColor();
                     Console.WriteLine();
-                    Console.WriteLine("Nom del arxiu: ");
+                    Console.WriteLine("Introdueix el numero del fitxer : ");
                     string file = Console.ReadLine();
-                    Fitxer.llegir(file);
-
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine("No existeix el fitxer o hi ha problemas amb el xml");
-                }
-
+                    
+                   
+                    
+                    Fitxer.llegir(Path.GetFileNameWithoutExtension(fileEntries[int.Parse(file)]));
+                
                     
                     Console.WriteLine("\n"+"Vols introduir un altre fitxer? y|n");
                     Boolean ok = false;
@@ -79,6 +80,7 @@ namespace López_Puente_M06UF1PT
             Console.ReadKey();
 
         }
+
 
     }
 }

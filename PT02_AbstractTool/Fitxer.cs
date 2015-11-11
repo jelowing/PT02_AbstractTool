@@ -31,7 +31,7 @@ namespace López_Puente_M06UF1PT
 
             Console.Clear();
             Console.WriteLine("Llegint fitxer ...{0}", pathname);
-            Console.WriteLine(content);
+            //Console.WriteLine(content);
             Console.ReadLine();
 
             if (File.Exists(pathname))
