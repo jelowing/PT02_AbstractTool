@@ -14,41 +14,41 @@ namespace López_Puente_M06UF1PT
         {
             string path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
             string dir = Path.Combine(path, "AbstractTool");
+            string[] fileEntries = Directory.GetFiles(dir, "*.txt");
             bool final = true;
-            int a = 0;
+            int index = 0;
 
 
-            do
-            {
+            
                 if (!Directory.Exists(dir))
                 {
                     Directory.CreateDirectory(dir);
                     Console.WriteLine("S'ha creat el directori {0}", Path.GetFileName(dir));
+                    Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("Carrega els arxius en aquesta ruta {0}", dir);
                     Console.ReadKey();
+                    Environment.Exit(0);
                 }
-                else
-                {
+
+
+                 do { 
+
                     Console.WriteLine("Arxius a : {0}", dir+"\n");
-                }
+
+                    carregaArxius(dir,index);
                 
-
-                    string[] fileEntries = Directory.GetFiles(dir,"*.txt");
-                    
-                    foreach (string f in fileEntries)
-                    {
-                         Console.WriteLine(a + " - " + Path.GetFileName(f));
-                         a++;  
-                    }
-
-                    Console.ResetColor();
                     Console.WriteLine();
                     Console.WriteLine("Introdueix el numero del fitxer : ");
                     string file = Console.ReadLine();
-                    
-                   
-                    
+
+
+
+                try {
                     Fitxer.llegir(Path.GetFileNameWithoutExtension(fileEntries[int.Parse(file)]));
+                }catch(Exception e)
+                {
+                    Console.WriteLine("El caràcter introduït no és un número o el número introduit no és a la llista");
+                }
                 
                     
                     Console.WriteLine("\n"+"Vols introduir un altre fitxer? y|n");
@@ -79,6 +79,17 @@ namespace López_Puente_M06UF1PT
 
             Console.ReadKey();
 
+        }
+
+        public static void carregaArxius(string dir, int index)
+        {
+            string[] fileEntries = Directory.GetFiles(dir, "*.txt");
+
+            foreach (string f in fileEntries)
+            {
+                Console.WriteLine(index + " - " + Path.GetFileName(f));
+                index++;
+            }
         }
 
 
